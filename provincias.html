@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Províncias — Portal de Turismo de Angola</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green: #006633;
+      --red: #cc0000;
+      --yellow: #ffcc00;
+      --bg: #f9fbfd;
+      --card: #ffffff;
+      --text: #1a1a1a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #f0f8f0, #e6f2e6);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 40px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.2rem;
+    }
+    header {
+      background: linear-gradient(90deg, var(--green), var(--red), var(--yellow));
+      padding: 1rem 0;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    header a {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    main {
+      margin-top: 2rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      text-align: center;
+      margin-bottom: 1.8rem;
+      color: var(--green);
+    }
+    .legend {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #555;
+      font-style: italic;
+    }
+    .legend .star {
+      color: gold;
+      margin: 0 0.2rem;
+    }
+    .provincias-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.4rem;
+    }
+    .prov-card {
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      transition: transform 0.25s;
+    }
+    .prov-card:hover {
+      transform: translateY(-6px);
+    }
+    .prov-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+    .prov-card .content {
+      padding: 1.2rem;
+    }
+    .prov-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.6rem;
+      color: var(--green);
+    }
+    .prov-card ul {
+      padding-left: 1.2rem;
+      margin-top: 0.6rem;
+    }
+    .prov-card li {
+      margin: 0.4rem 0;
+      font-size: 0.95rem;
+    }
+    .highlight {
+      font-weight: 600;
+      color: var(--red);
+    }
+    footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      color: #777;
+    }
+    @media (max-width: 768px) {
+      .provincias-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="index.html">← Voltar ao Portal Angola</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>📍 As 18 Províncias de Angola</h1>
+    
+    <p class="legend">
+      Pontos turísticos com <span class="star">⭐</span> são os mais visitados e icônicos do país.
+    </p>
+
+    <div class="provincias-grid">
+      <!-- Luanda -->
+      <div class="prov-card">
+        <img src="assets/Ilha de luanda.jpg" alt="Luanda">
+        <div class="content">
+          <h3>Luanda</h3>
+          <p>Capital e principal centro urbano de Angola.</p>
+          <ul>
+            <li><span class="highlight">⭐ Ilha do Cabo</span></li>
+            <li>Fortaleza de São Miguel</li>
+            <li>Museu Nacional da Escravatura</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Malanje -->
+      <div class="prov-card">
+        <img src="assets/Quedas de Kalandula.jpg" alt="Quedas do Kalandula">
+        <div class="content">
+          <h3>Malanje</h3>
+          <p>Terra das maravilhas naturais do norte.</p>
+          <ul>
+            <li><span class="highlight">⭐ Quedas do Kalandula</span></li>
+            <li>Pedras Negras de Pungo Andongo</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Huíla (Lubango) -->
+      <div class="prov-card">
+        <img src="imagens/cristo-rei.jpg" alt="Cristo Rei do Lubango">
+        <div class="content">
+          <h3>Huíla</h3>
+          <p>Belezas naturais e arquitetura religiosa.</p>
+          <ul>
+            <li><span class="highlight">⭐ Cristo Rei do Lubango</span></li>
+            <li><span class="highlight">⭐ Miradouro da Tundavala</span></li>
+            <li>Serra da Leba</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Namibe -->
+      <div class="prov-card">
+        <img src="imagens/namibe.jpg" alt="Deserto do Namibe">
+        <div class="content">
+          <h3>Namibe</h3>
+          <p>Único deserto costeiro da África.</p>
+          <ul>
+            <li><span class="highlight">⭐ Deserto do Namibe</span></li>
+            <li>Praia do Porto</li>
+            <li>Fenda de Tômbua</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Benguela -->
+      <div class="prov-card">
+        <img src="imagens/benguela.jpg" alt="Baía Azul">
+        <div class="content">
+          <h3>Benguela</h3>
+          <p>Costa atlântica com praias paradisíacas.</p>
+          <ul>
+            <li>Baía Azul</li>
+            <li>Praia Morena</li>
+            <li>Igreja da Nossa Senhora do Pópulo</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Cabinda -->
+      <div class="prov-card">
+        <img src="imagens/cabinda.jpg" alt="Praia do Banana">
+        <div class="content">
+          <h3>Cabinda</h3>
+          <p>Exclave com florestas e praias tropicais.</p>
+          <ul>
+            <li>Praia do Banana</li>
+            <li>Rio Chiloango</li>
+            <li>Macongo</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Continue com outras províncias conforme necessário -->
+    </div>
+  </main>
+
+  <footer class="container">
+    <p>© 2025 Portal Angola — Conheça os tesouros do nosso país 🇦🇴</p>
+  </footer>
+</body>
+</html>

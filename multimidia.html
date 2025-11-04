@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multimídia — Portal de Turismo de Angola</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green: #006633;
+      --red: #cc0000;
+      --yellow: #ffcc00;
+      --bg: #f9fbfd;
+      --card: #ffffff;
+      --text: #1a1a1a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #f0f8f0, #e6f2e6);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 40px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.2rem;
+    }
+    header {
+      background: linear-gradient(90deg, var(--green), var(--red), var(--yellow));
+      padding: 1rem 0;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    header a {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    main {
+      margin-top: 2rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 1.8rem;
+      color: var(--green);
+    }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.4rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+    h2 {
+      color: var(--green);
+      margin-bottom: 1rem;
+    }
+    .media-section {
+      margin-top: 1.2rem;
+    }
+    .media-section video,
+    .media-section audio,
+    .media-section img {
+      width: 100%;
+      border-radius: 8px;
+      margin-top: 0.8rem;
+      background: #000;
+    }
+    .media-section video {
+      height: 280px;
+      object-fit: cover;
+    }
+    .media-section img {
+      height: 240px;
+      object-fit: cover;
+    }
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="index.html">← Voltar ao Portal Angola</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>🎥 Galeria Multimídia</h1>
+
+    <!-- Vídeos -->
+    <div class="card">
+      <h2>📽️ Vídeos Culturais</h2>
+      
+      <div class="media-section">
+        <p><strong>Vídeo 1:</strong> Belezas Naturais de Angola</p>
+        <video width="720" height="400" autoplay muted loop playsinline>
+          <source src="video/m.mp4" type="video/mp4">
+          Seu navegador não suporta este vídeo.
+        </video>
+      </div>
+
+      <div class="media-section">
+        <p><strong>Vídeo 2:</strong> Dança Tradicional Chokwe</p>
+        <video width="720" height="400" controls>
+          <source src="video/danca.mp4" type="video/mp4">
+          Seu navegador não suporta este vídeo.
+        </video>
+      </div>
+
+      <div class="media-section">
+        <p><strong>Vídeo 3:</strong> Miradouro da Serra da Leba</p>
+        <video width="720" height="400" controls>
+          <source src="video/lubango.mp4" type="video/mp4">
+          Seu navegador não suporta este vídeo.
+        </video>
+      </div>
+    </div>
+
+    <!-- Áudios -->
+    <div class="card">
+      <h2>🎵 Áudios Tradicionais</h2>
+      
+      <div class="media-section">
+        <p><strong>Áudio 1:</strong> Ritmo de Semba</p>
+        <audio controls style="width: 100%; padding: 10px; background: #f5f5f5;">
+          <source src="audio/semba.mp3" type="audio/mpeg">
+          Seu navegador não suporta áudio.
+        </audio>
+      </div>
+
+      <div class="media-section">
+        <p><strong>Áudio 2:</strong> Batuque Tradicional</p>
+        <audio controls style="width: 100%; padding: 10px; background: #f5f5f5;">
+          <source src="audio/kizomba.mp3" type="audio/mpeg">
+          Seu navegador não suporta áudio.
+        </audio>
+      </div>
+    </div>
+
+    <!-- Imagens -->
+    <div class="card">
+      <h2>🖼️ Imagens Culturais</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:1rem; margin-top:1rem;">
+        <img src="imagens/bandeira.jpg" alt="Bandeira de Angola">
+        <img src="imagens/carnaval.jpg" alt="Carnaval de Luanda">
+        <img src="imagens/mascara.jpg" alt="Máscara Ritual">
+        <img src="imagens/artesanato.jpg" alt="Artesanato Angolano">
+      </div>
+    </div>
+  </main>
+
+  <footer class="container">
+    <p>© 2025 Portal Angola — Preservando a cultura através da tecnologia</p>
+  </footer>
+</body>
+</html>

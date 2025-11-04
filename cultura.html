@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cultura — Portal de Turismo de Angola</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green: #006633;
+      --red: #cc0000;
+      --yellow: #ffcc00;
+      --bg: #f9fbfd;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #f0f8f0, #e6f2e6);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 1.2rem;
+    }
+
+    header {
+      background: linear-gradient(90deg, var(--green), var(--red), var(--yellow));
+      padding: 1rem 0;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    header a {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    main {
+      margin-top: 2rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--green);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 1.8rem 0 1rem;
+      color: var(--green);
+      font-size: 1.4rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .card p {
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .media-item {
+      background: #fafdff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+      text-align: center;
+    }
+
+    .media-item video,
+    .media-item audio,
+    .media-item img {
+      width: 100%;
+      display: block;
+      background: #000;
+    }
+
+    .media-item video {
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .media-item img {
+      height: 220px;
+      object-fit: cover;
+      border: none;
+    }
+
+    .media-item p {
+      padding: 0.7rem 0.5rem;
+      font-size: 0.95rem;
+      color: #333;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.8rem; }
+      .section-title { font-size: 1.2rem; }
+      .media-item video,
+      .media-item img { height: 180px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="index.html">← Voltar ao Portal Angola</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>🎭 Cultura Angolana</h1>
+
+    <!-- Vídeo de Abertura -->
+    <div class="card">
+      <h3>Vídeo: A Alma Cultural de Angola</h3>
+      <p>Uma introdução visual às tradições, danças e ritmos que definem nossa identidade nacional.</p>
+      <video width="720" height="400" autoplay muted loop playsinline style="border-radius:10px; margin-top:1rem; width:100%; max-width:720px; height:auto;">
+        <source src="video/a.mp4" type="video/mp4">
+        Seu navegador não suporta este vídeo.
+      </video>
+    </div>
+
+    <!-- Música e Dança -->
+    <h2 class="section-title">🎶 Música e Dança Tradicionais</h2>
+    <div class="card">
+      <h3>Semba, Kizomba e Ritmos Ancestrais</h3>
+      <p>A música angolana carrega a história, a luta e a alegria do povo. Escute um trecho de ritmo tradicional.</p>
+      
+      <div class="media-grid">
+        <div class="media-item">
+          <audio controls style="padding: 10px; background: #f0f0f0;">
+            <source src="audio/MANO CHABA  MENINO DE RUA (OFICIAL VÍDEO).m4a" type="audio/mpeg">
+            Seu navegador não suporta áudio.
+          </audio>
+          <p>Ritmo Tradicional Angolano</p>
+        </div>
+        <div class="media-item">
+          <img src="imagens/danca.jpg" alt="Dança tradicional angolana">
+          <p>Dança do Povo Chokwe</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tradições e Festivais -->
+    <h2 class="section-title">🔥 Festivais e Tradições</h2>
+    <div class="card">
+      <h3>Carnaval, Ritos e Celebrações</h3>
+      <p>O Carnaval de Luanda e festas religiosas revelam a riqueza simbólica da cultura angolana.</p>
+      
+      <div class="media-grid">
+        <div class="media-item">
+          <img src="imagens/carnaval.jpg" alt="Carnaval de Luanda">
+          <p>Carnaval de Luanda</p>
+        </div>
+        <div class="media-item">
+          <img src="imagens/mascara.jpg" alt="Máscara ritual">
+          <p>Máscara Ritual Lunda-Chokwe</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Artesanato -->
+    <h2 class="section-title">🖌️ Artesanato</h2>
+    <div class="card">
+      <h3>Feito à Mão, com Alma</h3>
+      <p>Cestaria, tecelagem, escultura em madeira — cada peça conta uma história ancestral.</p>
+      
+      <div class="media-grid">
+        <div class="media-item">
+          <img src="imagens/cestaria.jpg" alt="Cestaria angolana">
+          <p>Cestaria Tradicional</p>
+        </div>
+        <div class="media-item">
+          <img src="imagens/artesanato.jpg" alt="Mercado de artesanato">
+          <p>Artesanato no Mercado</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gastronomia -->
+    <h2 class="section-title">🍲 Gastronomia</h2>
+    <div class="card">
+      <h3>Sabores que Unem Angola</h3>
+      <p>Pratos que refletem a diversidade étnica e geográfica do país.</p>
+      
+      <div class="media-grid">
+        <div class="media-item">
+          <img src="imagens/muamba.jpg" alt="Muamba de Galinha">
+          <p>Muamba de Galinha</p>
+        </div>
+        <div class="media-item">
+          <img src="imagens/funge.jpg" alt="Funge">
+          <p>Funge com Calulu</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="container">
+    <p>© 2025 Portal Angola — Projeto Final do Curso de Informática</p>
+    <p>Celebrando a cultura, tradição e identidade angolana 🇦🇴</p>
+  </footer>
+</body>
+</html>
