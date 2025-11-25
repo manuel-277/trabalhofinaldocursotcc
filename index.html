@@ -1,118 +1,433 @@
 <?php
 session_start();
-$usuario_logado = isset($_SESSION['usuario_logado']);
+$lang = $_SESSION['lang'] ?? 'pt';
 ?>
 
 <!DOCTYPE html>
-<html lang="pt-AO">
+<html lang="<?= $lang === 'en' ? 'en' : 'pt-AO' ?>">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portal de Turismo de Angola</title>
-
-  <!-- CSS interno atualizado com as cores solicitadas -->
   <style>
-    :root{
-      --green:#006633;
-      --yellow:#ffcc00;
-      --bg:#f5f7fa;
-      --card:#fff;
-      --muted:#6b7280;
-      --radius:12px;
-      --max-width:1200px;
-      --gap:16px;
-      font-family:Inter, 'Segoe UI', Tahoma, sans-serif;
+    :root {
+      --green: #006633;
+      --yellow: #ffcc00;
+      --bg: #f5f7fa;
+      --card: #fff;
+      --muted: #6b7280;
+      --radius: 12px;
+      --max-width: 1200px;
+      --gap: 16px;
+      font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter, 'Segoe UI', Tahoma, sans-serif}
-    html,body{height:100%}
-    body{background:linear-gradient(180deg,var(--bg),#eaf3fb);color:#102;line-height:1.5;padding-bottom:80px}
-    .container{max-width:var(--max-width);margin:0 auto;padding:1rem}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(180deg, var(--bg), #eaf3fb);
+      color: #102;
+      line-height: 1.6;
+      font-family: inherit;
+      padding-bottom: 80px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1rem;
+    }
 
     /* Header */
-    .site-header{position:sticky;top:0;background:linear-gradient(90deg,var(--green),var(--yellow));color:#fff;padding:.6rem 0;z-index:40}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 1rem}
-    .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:#fff}
-    .nav-logo{width:46px;height:46px;border-radius:8px;object-fit:cover}
-    nav ul{display:flex;gap:.6rem;list-style:none}
-    nav a{color:#fff;text-decoration:none;padding:.5rem .7rem;border-radius:8px;font-weight:700}
+    .site-header {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(90deg, var(--green), var(--yellow));
+      color: #fff;
+      padding: 0.6rem 0;
+      z-index: 40;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
 
-    /* Language & mobile */
-    .controls{display:flex;align-items:center;gap:.6rem}
-    .menu-btn{display:none;background:transparent;border:0;color:#fff;font-size:20px;padding:.2rem}
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .nav-logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: rgba(255,255,255,0.2);
+    }
+
+    nav ul {
+      display: flex;
+      gap: 0.6rem;
+      list-style: none;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 0.8rem;
+      border-radius: 8px;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .lang-select {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .menu-btn {
+      display: none;
+      background: transparent;
+      border: 0;
+      color: #fff;
+      font-size: 24px;
+      padding: 0.2rem;
+      cursor: pointer;
+    }
 
     /* Hero */
-    .hero{display:grid;grid-template-columns:1fr 320px;gap:1rem;align-items:start;margin:1rem 0}
-    .hero-left{padding:1.2rem;border-radius:12px;background:linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.02));}
-    .hero-left h1{font-size:1.5rem;color:#083;line-height:1.12;margin-bottom:.6rem}
-    .hero-left p{color:var(--muted);margin-top:.6rem}
-    .media-wrap{display:flex;gap:.6rem;flex-direction:column}
-    video{width:100%;height:auto;border-radius:8px}
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 1.5rem;
+      align-items: start;
+      margin: 1.5rem 0;
+    }
 
-    /* Right column highlights */
-    .hero-right{background:var(--card);padding:1rem;border-radius:12px}
-    .hero-right h3{margin-bottom:.6rem;color:#102}
-    .highlight{display:flex;gap:.6rem;padding:.5rem 0;align-items:center;border-bottom:1px dashed #eef6ff}
-    .highlight:last-child{border-bottom:0}
-    .highlight img{width:72px;height:54px;object-fit:cover;border-radius:8px}
-    .highlight strong{display:block;color:#102}
-    .highlight p{font-size:.9rem;color:var(--muted)}
+    .hero-left {
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    }
 
-    /* Cards grid (destinos) */
-    .cards-preview .grid,.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:1rem}
-    .card{background:var(--card);border-radius:12px;overflow:hidden;box-shadow:0 8px 28px rgba(2,6,23,.06)}
-    .card-img{width:100%;height:160px;object-fit:cover;display:block}
-    .card-body{padding:1rem}
-    .meta{font-size:.9rem;color:var(--muted)}
-    .btn{background:var(--green);color:#fff;padding:.45rem .8rem;border-radius:8px;text-decoration:none;display:inline-block;border:none;cursor:pointer;font-weight:700}
-    .btn.ghost{background:transparent;border:1px solid #e6eef8;color:var(--green)}
-    video{width: 650px; height: 350px; border-radius:20px;}
+    .hero-left h1 {
+      font-size: 1.8rem;
+      color: var(--green);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      font-weight: 800;
+    }
 
-    /* Form / info boxes */
-    .form-box{background:var(--card);padding:1rem;border-radius:12px;box-shadow:0 8px 22px rgba(2,6,23,.06);display:flex;flex-direction:column;gap:.6rem}
-    .form-box input,.form-box textarea,.form-box select{padding:.6rem;border-radius:8px;border:1px solid #eef6ff}
+    .hero-left p {
+      color: var(--muted);
+      margin-top: 0.8rem;
+    }
 
-    /* Provinces list */
-    .prov-list{display:grid;gap:.9rem;margin-top:1rem}
-    .prov-item{background:var(--card);padding:1rem;border-radius:10px;box-shadow:0 8px 24px rgba(2,6,23,.05)}
+    .media-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
 
-    footer{margin-top:1rem;padding:1rem 0;background:transparent}
+    video {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      max-width: 650px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
 
-    @media (max-width:800px){
-      .hero{grid-template-columns:1fr}
-      nav ul{display:none}
-      .menu-btn{display:inline-block}
+    .btn {
+      background: var(--green);
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      border: 2px solid var(--green);
+    }
+
+    .btn:hover {
+      background: #004d26;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,102,51,0.3);
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border: 2px solid var(--green);
+      color: var(--green);
+    }
+
+    .btn.ghost:hover {
+      background: rgba(0,102,51,0.05);
+      transform: translateY(-3px);
+    }
+
+    /* Hero Right */
+    .hero-right {
+      background: var(--card);
+      padding: 1.2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgba(2,6,23,0.08);
+      height: fit-content;
+    }
+
+    .hero-right h3 {
+      margin-bottom: 1rem;
+      color: var(--green);
+      font-size: 1.3rem;
+    }
+
+    .highlight {
+      display: flex;
+      gap: 1rem;
+      padding: 0.8rem 0;
+      align-items: flex-start;
+      border-bottom: 1px solid #f0f4f8;
+      transition: 0.2s;
+    }
+
+    .highlight:hover {
+      background: #f9fbfd;
+      border-radius: 8px;
+      padding-left: 0.5rem;
+    }
+
+    .highlight:last-child {
+      border-bottom: 0;
+    }
+
+    .highlight img {
+      width: 72px;
+      height: 54px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .highlight strong {
+      display: block;
+      color: #102;
+      margin-bottom: 0.2rem;
+    }
+
+    .highlight p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(2,6,23,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 32px rgba(2,6,23,0.15);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 1.2rem;
+    }
+
+    .meta {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0.5rem 0;
+    }
+
+    /* Form boxes */
+    .form-box {
+      background: var(--card);
+      padding: 1.3rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 28px rgba(2,6,23,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .prov-list {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .prov-item {
+      background: var(--card);
+      padding: 1.2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(2,6,23,0.05);
+      transition: transform 0.2s;
+    }
+
+    .prov-item:hover {
+      transform: translateX(6px);
+    }
+
+    footer {
+      margin-top: 2rem;
+      padding: 1.5rem 0;
+      background: transparent;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-left, .hero-right, .card, .form-box {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    .hero-left { animation-delay: 0.1s; }
+    .hero-right { animation-delay: 0.2s; }
+    .card:nth-child(1) { animation-delay: 0.3s; }
+    .card:nth-child(2) { animation-delay: 0.4s; }
+    .card:nth-child(3) { animation-delay: 0.5s; }
+    .card:nth-child(4) { animation-delay: 0.6s; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+      .hero-right {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--green);
+        padding: 1rem;
+        z-index: 50;
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      }
+      nav ul.show {
+        display: flex !important;
+      }
+      .menu-btn {
+        display: block;
+      }
+      .hero-left h1 {
+        font-size: 1.5rem;
+      }
+      .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-left, .hero-right {
+        padding: 1rem;
+      }
+      .highlight img {
+        width: 60px;
+        height: 45px;
+      }
     }
   </style>
 </head>
 <body>
+
   <header class="site-header">
     <div class="container nav-inner">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.php">
         <img src="assets/logo1.png" alt="PTA" class="nav-logo">
         <span>Portal de Turismo de Angola</span>
       </a>
 
-      <nav aria-label="Navegação principal">
+      <nav aria-label="Navegação principal" id="main-nav">
         <ul>
           <li><a href="index.html">Início</a></li>
           <li><a href="provincias.html">Províncias</a></li>
-          <li><a href="multimidia.html">Multimidia</a></li>
+          <li><a href="multimidia.html">Multimídia</a></li>
           <li><a href="cultura.html">Cultura</a></li>
-          <li><a href="cadastro.html">Cadastro</a></li>
-          <li><a href="login.html">Login</a></li>
+          <li><a href="destinos.html">Destinos</a></li>
+          <?php if (isset($_SESSION['usuario_id'])): ?>
+            <li><a href="logout.html">Sair</a></li>
+          <?php else: ?>
+            <li><a href="cadastro.html">Cadastro</a></li>
+            <li><a href="login.html">Login</a></li>
+          <?php endif; ?>
           <li><a href="contato.html">Contato</a></li>
-           <li><a href="sobre.html">Sobre</a></li>
-          
+          <li><a href="sobre.html">Sobre</a></li>
         </ul>
       </nav>
 
       <div class="controls">
-        <div class="lang-switch">
-          <button class="lang-btn" data-lang="pt">PT</button>
-          <button class="lang-btn" data-lang="en">EN</button>
-        </div>
-        <button class="menu-btn" aria-label="Abrir menu">☰</button>
+        <select class="lang-select" onchange="changeLang(this.value)">
+          <option value="pt" <?= $lang === 'pt' ? 'selected' : '' ?>>PT</option>
+          <option value="en" <?= $lang === 'en' ? 'selected' : '' ?>>EN</option>
+        </select>
+        <button class="menu-btn" id="menu-toggle">☰</button>
       </div>
     </div>
   </header>
@@ -122,24 +437,23 @@ $usuario_logado = isset($_SESSION['usuario_logado']);
       <div class="hero-left">
         <h1>Descobre Angola — Praias, Montanhas, Cultura e Experiências Únicas</h1>
         <div class="media-wrap">
-          <video width="720" height="400" autoplay muted loop playsinline>
+          <video autoplay muted loop playsinline>
             <source src="video/m.mp4" type="video/mp4">
             Seu navegador não suporta este vídeo.
           </video>
 
-          <p class="muted">Guias locais, dicas de viagem, rotas gastronômicas e histórias culturais para cada província.</p>
+          <p>Guias locais, dicas de viagem, rotas gastronômicas e histórias culturais para cada província.</p>
 
-          <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.6rem">
-            <a class="btn" href="destinos.html">Explorar Destinos</a>
-            <a class="btn ghost" href="multimedia.html">Ver Multimédia</a>
+          <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1rem">
+            <a class="btn" href="destinos.php">Explorar Destinos</a>
+            <a class="btn ghost" href="multimidia.php">Ver Multimédia</a>
           </div>
         </div>
 
-        <!-- Chamadas que atraem público: itinerários, eventos, experiências -->
-        <div style="margin-top:1rem;display:grid;gap:.6rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+        <div style="margin-top: 1.5rem; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))">
           <div class="form-box">
             <strong>Itinerário Rápido: 7 dias em Angola</strong>
-            <ol style="margin-left:16px;color:var(--muted)">
+            <ol style="margin-left: 20px; color: var(--muted); padding-left: 0;">
               <li>Luanda — Cidade, praias e vida noturna</li>
               <li>Bengo — Observação de aves e litoral</li>
               <li>Huíla — Serra da Leba e trilhos</li>
@@ -148,86 +462,56 @@ $usuario_logado = isset($_SESSION['usuario_logado']);
               <li>Kissama — Safári e natureza</li>
               <li>Moxico — Rotas ribeirinhas e pesca tradicional</li>
             </ol>
-            <a class="btn" href="destinos.html" style="margin-top:.6rem">Ver itinerários completos</a>
+            <a class="btn" href="destinos.php" style="margin-top: 0.8rem; display: inline-block;">Ver itinerários</a>
           </div>
 
           <div class="form-box">
             <strong>Eventos e Festivais</strong>
-            <p class="muted">Confira as festas culturais, festas tradicionais e festivais de música ao longo do ano. Exemplos: Festival de Luanda, Feira de Malanje, e festivais locais em Benguela e Huambo.</p>
-            <a class="btn ghost" href="cultura.html">Clique aqui para conhecer mais sobre a cultural de Angola</a>
+            <p>Confira as festas culturais, festas tradicionais e festivais de música ao longo do ano. Exemplos: Festival de Luanda, Feira de Malanje, e festivais locais em Benguela e Huambo.</p>
+            <a class="btn ghost" href="cultura.php" style="display: inline-block;">Conhecer a cultura</a>
           </div>
         </div>
       </div>
 
       <aside class="hero-right">
-        <h3>Destaques dos Principais pontos Turísco de Angola</h3>
+        <h3>Destaques dos Principais Pontos Turísticos</h3>
 
-        <!-- Lista compacta com 18 províncias (uma linha por província) -->
-        <div class="highlight">
-          <img src="assets/Ilha de Luanda.jpg" alt="Luanda">
-          <div><strong>Luanda</strong><p class="muted">Capital — praias urbanas, museus e gastronomia.</p></div>
-        </div>
+        <?php
+        $highlights = [
+          ['nome' => 'Luanda', 'desc' => 'Capital — praias urbanas, museus e gastronomia.', 'img' => 'Ilha de Luanda.jpg'],
+          ['nome' => 'Bengo', 'desc' => 'Costa e observação de aves; acesso fácil a praias do estuário.', 'img' => 'jacarebangaõ.jpg'],
+          ['nome' => 'Benguela', 'desc' => 'Praias históricas, arquitetura colonial e pesca artesanal.', 'img' => 'Benguela.jpg'],
+          ['nome' => 'Bié', 'desc' => 'Paisagens de planície, cultura e mercados tradicionais.', 'img' => 'Bié.jpg'],
+          ['nome' => 'Cabinda', 'desc' => 'Região encravada com praias tropicais e rica biodiversidade.', 'img' => 'Cabinda.jpg'],
+          ['nome' => 'Cuando Cubango', 'desc' => 'Rios, ecoturismo e paisagens selvagens (ideal para aventureiros).', 'img' => 'download.jpg'],
+          ['nome' => 'Cuanza Norte', 'desc' => 'Cachoeiras e história; trilhos verdes.', 'img' => 'Cuanza Norte2.jpg'],
+          ['nome' => 'Cuanza Sul', 'desc' => 'Praias, agricultura e aldeias costeiras.', 'img' => 'Cuanza Sul vila gabela.jpg'],
+          ['nome' => 'Cunene', 'desc' => 'Porto Namibe, dunas e desertos costeiros.', 'img' => 'Cunene1.jpg'],
+          ['nome' => 'Huambo', 'desc' => 'Cidade histórica, clima ameno e trilhos próximos.', 'img' => 'Huambo3.jpg']
+        ];
 
-        <div class="highlight">
-          <img src="assets/jacarebangaõ.jpg" alt="Bengo">
-          <div><strong>Bengo</strong><p class="muted">Costa e observação de aves; acesso fácil a praias do estuário.</p></div>
-        </div>
-
-        <div class="highlight">
-          <img src="assets/Benguela.jpg" alt="Benguela">
-          <div><strong>Benguela</strong><p class="muted">Praias históricas, arquitetura colonial e pesca artesanal.</p></div>
-        </div>
-
-        <div class="highlight">
-          <img src="assets/Bié.jpg" alt="Bié">
-          <div><strong>Bié</strong><p class="muted">Paisagens de planície, cultura e mercados tradicionais.</p></div>
-        </div>
-
-        <div class="highlight">
-          <img src="assets/Cabinda.jpg" alt="Cabinda">
-          <div><strong>Cabinda</strong><p class="muted">Região encravada com praias tropicais e rica biodiversidade.</p></div>
-        </div>
-
-        <div class="highlight">
-          <img src="assets/download.jpg" alt="Cuando Cubango">
-          <div><strong>Cuando Cubango</strong><p class="muted">Rios, ecoturismo e paisagens selvagens (ideal para aventureiros).</p></div>
-        </div>
-
-        <div class="highlight">
-          <img src="assets/Cuanza Norte2.jpg" alt="Cuanza Norte">
-          <div><strong>Cuanza Norte</strong><p class="muted">Cachoeiras e história; trilhos verdes.</p></div>
-        </div>
-
-        <div class="highlight">
-          <img src="assets/Cuanza Sul vila gabela.jpg" alt="Cuanza Sul">
-          <div><strong>Cuanza Sul</strong><p class="muted">Praias, agricultura e aldeias costeiras.</p></div>
-        </div>
-
-        <div class="highlight">
-          <img src="assets/Cunene1.jpg" alt="Cunene">
-          <div><strong>Cunene</strong><p class="muted">Porto Namibe, dunas e desertos costeiros.</p></div>
-        </div>
-
-        <div class="highlight">
-          <img src="assets/Huambo3.jpg" alt="Huambo">
-          <div><strong>Huambo</strong><p class="muted">Cidade histórica, clima ameno e trilhos próximos.</p></div>
-        </div>
-
-
-      
+        foreach ($highlights as $h):
+        ?>
+          <div class="highlight">
+            <img src="assets/<?= htmlspecialchars($h['img']) ?>" alt="<?= htmlspecialchars($h['nome']) ?>">
+            <div>
+              <strong><?= htmlspecialchars($h['nome']) ?></strong>
+              <p><?= htmlspecialchars($h['desc']) ?></p>
+            </div>
+          </div>
+        <?php endforeach; ?>
       </aside>
     </section>
 
-    <!-- Destinos em cartões -->
     <section class="cards-preview">
-      <h2>Alguns Destinos Imperdíveis</h2>
+      <h2 style="color: var(--green); margin: 1.5rem 0 1rem; font-size: 1.6rem;">Alguns Destinos Imperdíveis</h2>
       <div class="grid">
         <article class="card">
           <img class="card-img" src="assets/Ilha%20de%20Luanda.jpg" alt="Ilha de Luanda">
           <div class="card-body">
             <h3>Ilha de Luanda</h3>
             <p class="meta">Praias, restaurantes e vida costeira. Ideal para fim de semana.</p>
-            <div class="actions"><a class="btn" href="destinos.html#luanda">Ver detalhes</a></div>
+            <a class="btn" href="destinos.php#luanda">Ver detalhes</a>
           </div>
         </article>
 
@@ -236,7 +520,7 @@ $usuario_logado = isset($_SESSION['usuario_logado']);
           <div class="card-body">
             <h3>Parque Nacional da Kissama</h3>
             <p class="meta">Safári próximo a Luanda — fauna diversa e experiências guiadas.</p>
-            <div class="actions"><a class="btn" href="destinos.html#kissama">Ver detalhes</a></div>
+            <a class="btn" href="destinos.php#kissama">Ver detalhes</a>
           </div>
         </article>
 
@@ -245,7 +529,7 @@ $usuario_logado = isset($_SESSION['usuario_logado']);
           <div class="card-body">
             <h3>Quedas de Kalandula</h3>
             <p class="meta">Cenário espetacular em Malanje — perfeita para fotografia e passeios.</p>
-            <div class="actions"><a class="btn" href="destinos.html#kalandula">Ver detalhes</a></div>
+            <a class="btn" href="destinos.php#kalandula">Ver detalhes</a>
           </div>
         </article>
 
@@ -254,73 +538,67 @@ $usuario_logado = isset($_SESSION['usuario_logado']);
           <div class="card-body">
             <h3>Serra da Leba</h3>
             <p class="meta">Miradouros e estrada icónica — Huíla.</p>
-            <div class="actions"><a class="btn" href="destinos.html#serra">Ver detalhes</a></div>
+            <a class="btn" href="destinos.php#serra">Ver detalhes</a>
           </div>
         </article>
-    <video width="720" height="400" autoplay muted loop playsinline>
-            <source src="video/video.mp4" type="video/mp4">
-            Seu navegador não suporta este vídeo.
-          </video>
       </div>
+
+
     </section>
 
-    <!-- Mais informações que chamam atenção do público -->
-    <section style="margin-top:1rem">
+    <section style="margin-top: 2rem;">
       <div class="form-box">
-        <strong>Por que visitar Angola?</strong>
-        <ul style="margin-left:16px;color:var(--muted)">
+        <strong style="color: var(--green); font-size: 1.2rem;">Por que visitar Angola?</strong>
+        <ul style="margin-left: 20px; color: var(--muted);">
           <li>Diversidade: praias, montanhas, desertos e selvas num único país.</li>
           <li>Cultura viva: música, dança e culinária regional em cada província.</li>
           <li>Aventura: safáris, trilhos, esportes aquáticos e rotas off-road.</li>
           <li>Gastronomia: sabores locais — peixe grelhado, muamba, funge e cafés regionais.</li>
         </ul>
-        <p class="muted">Planeie com antecedência; confira eventos locais e reserve guias nas áreas remotas.</p>
+        <p>Planeie com antecedência; confira eventos locais e reserve guias nas áreas remotas.</p>
       </div>
     </section>
 
-    <!-- Lista de províncias com mais detalhes (ampliada) -->
-    <section style="margin-top:1rem">
-      <h2>Explorar por Província</h2>
+    <section style="margin-top: 2rem;">
+      <h2 style="color: var(--green); margin-bottom: 1.2rem; font-size: 1.6rem;">Explorar por Província</h2>
       <div class="prov-list">
-        <div class="prov-item"><strong>Luanda</strong><p class="muted">Porto, museus, vida noturna e praias urbanas. Boa estrutura hoteleira.</p></div>
-        <div class="prov-item"><strong>Bengo</strong><p class="muted">Costa tranquila, observação de aves e aldeias de pescadores.</p></div>
-        <div class="prov-item"><strong>Benguela</strong><p class="muted">Praias extensas, pontos históricos e cultura costeira.</p></div>
-        <div class="prov-item"><strong>Bié</strong><p class="muted">Mercados locais, agricultura e paisagens rurais.</p></div>
-        <div class="prov-item"><strong>Cabinda</strong><p class="muted">Praias tropicais e natureza exuberante (região encravada).</p></div>
-        <div class="prov-item"><strong>Cuando Cubango</strong><p class="muted">Rios, vida selvagem e turismo de aventura.</p></div>
-        <div class="prov-item"><strong>Cuanza Norte</strong><p class="muted">Cachoeiras, história e boas rotas para trekkings curtos.</p></div>
-        <div class="prov-item"><strong>Cuanza Sul</strong><p class="muted">Costa e comunidades tradicionais; excelente para turismo rural.</p></div>
-        <div class="prov-item"><strong>Cunene</strong><p class="muted">Desertos costeiros, dunas e experiências únicas no Namibe.</p></div>
-        <div class="prov-item"><strong>Huambo</strong><p class="muted">Clima ameno, arquitetura e cafés locais.</p></div>
-        <div class="prov-item"><strong>Huíla</strong><p class="muted">Serra da Leba, trilhos e paisagens de montanha.</p></div>
-        <div class="prov-item"><strong>Lunda Norte</strong><p class="muted">Cultura Lunda, rotas interiores e mineração.</p></div>
-        <div class="prov-item"><strong>Lunda Sul</strong><p class="muted">Tradições locais, rios e mercados regionais.</p></div>
-        <div class="prov-item"><strong>Malanje</strong><p class="muted">Quedas de Kalandula, Cangandala e roteiros eco-culturais.</p></div>
-        <div class="prov-item"><strong>Moxico</strong><p class="muted">Rios amplos, pesca e comunidades fluviais.</p></div>
-        <div class="prov-item"><strong>Namibe</strong><p class="muted">Deserto salineiro, Welwitschia e praias isoladas.</p></div>
-        <div class="prov-item"><strong>Uíge</strong><p class="muted">Florestas, café e cultura Kongo.</p></div>
-        <div class="prov-item"><strong>Zaire</strong><p class="muted">Rios e comunidades históricas na faixa norte.</p></div>
+        <div class="prov-item"><strong>Luanda</strong><p>Porto, museus, vida noturna e praias urbanas. Boa estrutura hoteleira.</p></div>
+        <div class="prov-item"><strong>Bengo</strong><p>Costa tranquila, observação de aves e aldeias de pescadores.</p></div>
+        <div class="prov-item"><strong>Benguela</strong><p>Praias extensas, pontos históricos e cultura costeira.</p></div>
+        <div class="prov-item"><strong>Bié</strong><p>Mercados locais, agricultura e paisagens rurais.</p></div>
+        <div class="prov-item"><strong>Cabinda</strong><p>Praias tropicais e natureza exuberante (região encravada).</p></div>
+        <div class="prov-item"><strong>Cuando Cubango</strong><p>Rios, vida selvagem e turismo de aventura.</p></div>
+        <div class="prov-item"><strong>Cuanza Norte</strong><p>Cachoeiras e história; boas rotas para trekkings curtos.</p></div>
+        <div class="prov-item"><strong>Cuanza Sul</strong><p>Costa e comunidades tradicionais; excelente para turismo rural.</p></div>
       </div>
     </section>
 
     <footer>
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+      <div style="display: flex; flex-direction: column; gap: 0.8rem; align-items: center;">
         <div>&copy; <span id="year"></span> Portal de Turismo de Angola</div>
-        <div><a class="btn" href="provincias.html">Ver todas as províncias</a></div>
+        <a class="btn" href="provincias.php" style="padding: 0.4rem 1rem; font-size: 0.95rem;">Ver todas as províncias</a>
       </div>
     </footer>
   </main>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Menu mobile
+    document.getElementById('menu-toggle').addEventListener('click', () => {
+      const nav = document.querySelector('#main-nav ul');
+      nav.classList.toggle('show');
+    });
 
-    // Language toggle (simple) - keeps markup minimal
-    const langBtns = document.querySelectorAll('.lang-btn');
-    langBtns.forEach(btn => btn.addEventListener('click', ()=>{
-      langBtns.forEach(b=>b.disabled=false);
-      btn.disabled = true;
-      // could add more translations here if needed
-    }));
+    // Troca de idioma
+    function changeLang(lang) {
+      fetch('troca_idioma.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'lang=' + lang
+      }).then(() => location.reload());
+    }
+
+    // Ano dinâmico
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
